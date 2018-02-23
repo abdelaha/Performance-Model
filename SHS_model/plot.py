@@ -16,9 +16,7 @@ upperBoundIn = []
 control_signal = []
 colors =[]
 
-fileName = 'E:/Dropbox/PhD Research/ModelLearning/sim_anneal/control_experiments/SHS/23/output.csv'
-
-fileName = 'C:/Users/abdelaha/Dropbox/PhD Research/ModelLearning/sim_anneal/control_experiments/SHS/23/output.csv'
+fileName = 'output.csv'
 with open(fileName, 'rt') as dataFile:
     reader = csv.reader(dataFile, delimiter=',')
     firstFlag = 1
@@ -41,10 +39,11 @@ with open(fileName, 'rt') as dataFile:
 
         control_signal.append(float(row[10]))
 n = len(out_mean)
-# Create a subplot with 3 rows and 1 column
+
+# Create a figure with 3 subplots (3 rows and 1 column)
 fig, (ax1, ax2, ax3, ax4) = pl.subplots(4, 1)
 
-# time
+# time indices
 
 x = range(n)
 #######  PLOT latency prediction (output)
@@ -59,6 +58,7 @@ ax1.set_ylabel('$Latency$')
 ax1.legend(loc='upper right')
 ax1.set_xlim(0, n + 1)
 ax1.grid(True)
+
 #### PLOT Request Rate and its predictions
 ax2.plot(In_pred_data, 'b-', markersize=5, label=u'Observations')
 ax2.plot(In_mean, 'r--', label=u'Prediction')
@@ -72,14 +72,15 @@ ax2.set_ylabel('$Request rate$')
 ax2.set_xlim(0, n + 1)
 ax2.legend(loc='upper right')
 ax2.grid(True)
-#### PLOT Cluster (mode) prediction
+
+#### PLOT Cluster (mode) estimation
 ax3.scatter(x, [1] * n, marker='.', s=30, lw=0, alpha=1, c=colors)
 ax3.set_xlim(0, n + 1)
 ax3.set_xlabel('$time$')
 ax3.set_ylabel('$cluster$')
 ax3.grid(True)
-# ax3.legend([1]*n,colors,loc='upper right')
-#### PLOT Control output
+
+#### PLOT control output
 ax4.plot(control_signal)
 ax4.set_xlabel('$time$')
 ax4.set_ylabel('$number of cores$')
